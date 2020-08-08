@@ -19,6 +19,9 @@ const unitLength = width / cells;
 // create an engine
 const engine = Engine.create();
 
+// disable gravity
+engine.world.gravity.y = 0;
+
 // get world => snapshot of all the shapes we have
 const { world } = engine;
 
