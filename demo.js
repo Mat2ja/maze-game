@@ -14,7 +14,6 @@ const {
 const width = 800;
 const height = 600;
 
-
 // create an engine
 const engine = Engine.create();
 
