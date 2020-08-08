@@ -7,9 +7,10 @@ const {
     Runner,
     World,
     Bodies,
+    Body
 } = Matter;
 
-const cells = 3;
+const cells = 10;
 const width = 600;
 const height = 600;
 
@@ -101,7 +102,6 @@ const horizontals = Array(cells - 1)
 // Pick a random starting cell
 const startRow = Math.floor(Math.random() * cells);
 const startColumn = Math.floor(Math.random() * cells);
-console.log(startRow, startColumn);
 
 const stepThroughCell = (row, column) => {
     // If I have visited the cell at [row,column], then return
@@ -154,9 +154,6 @@ const stepThroughCell = (row, column) => {
 };
 
 stepThroughCell(startRow, startColumn);
-console.log('grid', grid);
-console.log('verticals', verticals);
-console.log('horizontals', horizontals);
 
 horizontals.forEach((row, rowIndex) => {
     row.forEach((open, columnIndex) => {
@@ -224,4 +221,24 @@ const ball = Bodies.circle(
     unitLength / 4
 );
 World.add(world, ball);
+
+// Ball controls
+document.addEventListener('keydown', (e) => {
+    const key = e.keyCode;
+    const { x, y } = ball.velocity;
+
+    if (key === 87 || key === 38) {
+        // W / ARROW-UP
+        Body.setVelocity(ball, { x, y: y - 5 });
+    } else if (key === 68 || key === 39) {
+        // D / ARROW-RIGHT
+        Body.setVelocity(ball, { x: x + 5, y });
+    } else if (key === 83 || key === 40) {
+        // S / ARROW-DOWN
+        Body.setVelocity(ball, { x, y: y + 5 });
+    } else if (key === 65 || key === 37) {
+        // A / ARROW-LEFT
+        Body.setVelocity(ball, { x: x - 5, y });
+    }
+});
 
