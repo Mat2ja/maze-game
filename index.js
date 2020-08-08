@@ -7,10 +7,11 @@ const {
     Runner,
     World,
     Bodies,
-    Body
+    Body,
+    Events
 } = Matter;
 
-const cells = 10;
+const cells = 3;
 const width = 600;
 const height = 600;
 
@@ -19,7 +20,7 @@ const unitLength = width / cells;
 // create an engine
 const engine = Engine.create();
 
-// disable gravity
+// disable gravity on start
 engine.world.gravity.y = 0;
 
 // get world => snapshot of all the shapes we have
@@ -211,6 +212,7 @@ const goal = Bodies.rectangle(
     unitLength * .7,
     unitLength * .7,
     {
+        label: 'goal',
         isStatic: true,
         render: { fillStyle: '#81C784' }
     }
@@ -221,7 +223,8 @@ World.add(world, goal);
 const ball = Bodies.circle(
     unitLength / 2,
     unitLength / 2,
-    unitLength / 4
+    unitLength / 4,
+    { label: 'ball' }
 );
 World.add(world, ball);
 
@@ -245,3 +248,32 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// Win condition
+Events.on(engine, 'collisionStart', (event) => {
+    event.pairs.forEach(collision => {
+        const labels = ['ball', 'goal'];
+
+        if (
+            labels.includes(collision.bodyA.label) &&
+            labels.includes(collision.bodyA.label)
+        ) {
+            console.log('user won😎😎😎😎😎');
+        }
+    });
+})
+
+
+//TODOS
+// toggle gravity
+// toggle difficulty - with slider
+
+const gravityBtn = document.querySelector('#gravity-btn');
+gravityBtn.addEventListener('click', () => {
+
+    const { gravity } = engine.world;
+    if (gravity.y) {
+        gravity.y = 0;
+    } else {
+        gravity.y = 1;
+    }
+})
