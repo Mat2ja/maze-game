@@ -41,10 +41,22 @@ Runner.run(Runner.create(), engine);
 // Walls
 const walls = [
     // (shape center from left, shape center from top, width, height)
-    Bodies.rectangle(width / 2, 0, width, 40, { isStatic: true }),
-    Bodies.rectangle(0, height / 2, 40, height, { isStatic: true }),
-    Bodies.rectangle(width, height / 2, 40, height, { isStatic: true }),
-    Bodies.rectangle(width / 2, height, width, 40, { isStatic: true }),
+    Bodies.rectangle(
+        width / 2, 0, width, 2,
+        { isStatic: true, render: { fillStyle: '#FF8A65' } }),
+
+    Bodies.rectangle(
+        0, height / 2, 2, height,
+        { isStatic: true, render: { fillStyle: '#FF8A65' } }),
+
+    Bodies.rectangle(
+        width, height / 2, 2, height,
+        { isStatic: true, render: { fillStyle: '#FF8A65' } }),
+
+    Bodies.rectangle(
+        width / 2, height, width, 2, {
+        isStatic: true, render: { fillStyle: '#FF8A65' }
+    }),
 ];
 World.add(world, walls);
 
@@ -141,7 +153,6 @@ const stepThroughCell = (row, column) => {
     };
 };
 
-
 stepThroughCell(startRow, startColumn);
 console.log('grid', grid);
 console.log('verticals', verticals);
@@ -162,8 +173,9 @@ horizontals.forEach((row, rowIndex) => {
             10,
             {
                 isStatic: true,
-                render: { fillStyle: 'orange' }
-            });
+                render: { fillStyle: '#FF8A65' }
+            }
+        );
 
         World.add(world, wall);
     })
@@ -184,12 +196,32 @@ verticals.forEach((row, rowIndex) => {
             unitLength,
             {
                 isStatic: true,
-                render: { fillStyle: 'orange' }
-            });
+                render: { fillStyle: '#FF8A65' }
+            }
+        );
 
         World.add(world, wall);
     })
 });
 
+// Goal
+const goal = Bodies.rectangle(
+    width - unitLength / 2,
+    height - unitLength / 2,
+    unitLength * .7,
+    unitLength * .7,
+    {
+        isStatic: true,
+        render: { fillStyle: '#81C784' }
+    }
+);
+World.add(world, goal);
 
+// Ball
+const ball = Bodies.circle(
+    unitLength / 2,
+    unitLength / 2,
+    unitLength / 4
+);
+World.add(world, ball);
 
