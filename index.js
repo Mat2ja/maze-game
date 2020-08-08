@@ -11,11 +11,15 @@ const {
     Events
 } = Matter;
 
-const cells = 3;
-const width = 600;
-const height = 600;
-
-const unitLength = width / cells;
+const cellsHorizonzal = 4;
+const cellsVertical = 3;
+// const width = window.innerWidth;
+// const height = window.innerHeight;
+const width = document.body.clientWidth;
+const height = document.body.clientHeight;
+// TODO big refactor -- 1min video
+const unitLengthX = width / cellsHorizonzal;
+const unitLengthY = height / cellsVertical;
 
 // create an engine
 const engine = Engine.create();
@@ -173,6 +177,7 @@ horizontals.forEach((row, rowIndex) => {
             unitLength,
             10,
             {
+                label: 'wall',
                 isStatic: true,
                 render: { fillStyle: '#FF8A65' }
             }
@@ -196,6 +201,7 @@ verticals.forEach((row, rowIndex) => {
             10,
             unitLength,
             {
+                label: 'wall',
                 isStatic: true,
                 render: { fillStyle: '#FF8A65' }
             }
@@ -257,23 +263,34 @@ Events.on(engine, 'collisionStart', (event) => {
             labels.includes(collision.bodyA.label) &&
             labels.includes(collision.bodyA.label)
         ) {
-            console.log('user won😎😎😎😎😎');
-        }
+            world.gravity.y = 1;
+            gravityBtn.classList.add('pressed');
+            world.bodies.forEach(body => {
+                console.log(body);
+                if (body.label === 'wall') {
+                    console.log(body);
+                    Body.setStatic(body, false);
+                    // body.isStatic = false; // this makes all borders dissapear for some reason
+                };
+            });
+        };
     });
-})
+});
 
 
 //TODOS
 // toggle gravity
 // toggle difficulty - with slider
 
-const gravityBtn = document.querySelector('#gravity-btn');
-gravityBtn.addEventListener('click', () => {
+// const gravityBtn = document.querySelector('#gravity-btn');
+// gravityBtn.addEventListener('click', () => {
 
-    const { gravity } = engine.world;
-    if (gravity.y) {
-        gravity.y = 0;
-    } else {
-        gravity.y = 1;
-    }
-})
+//     const { gravity } = engine.world;
+//     if (gravity.y) {
+//         gravity.y = 0;
+//     } else {
+//         gravity.y = 1;
+//     }
+
+//     gravityBtn.classList.toggle('pressed');
+// });
