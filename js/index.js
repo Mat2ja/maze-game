@@ -11,8 +11,8 @@ const {
     Events
 } = Matter;
 
-let cellsHorizonzal = 14;
-let cellsVertical = 10;
+let cellsHorizonzal = 2;
+let cellsVertical = 2;
 // const width = window.innerWidth;
 // const height = window.innerHeight;
 const width = document.body.clientWidth;
@@ -53,19 +53,19 @@ const walls = [
     // (shape center from left, shape center from top, width, height)
     Bodies.rectangle(
         width / 2, 0, width, 2,
-        { isStatic: true, render: { fillStyle: '#FF8A65' } }),
+        { isStatic: true, render: { fillStyle: '#18181D' } }),
 
     Bodies.rectangle(
         0, height / 2, 2, height,
-        { isStatic: true, render: { fillStyle: '#FF8A65' } }),
+        { isStatic: true, render: { fillStyle: '#18181D' } }),
 
     Bodies.rectangle(
         width, height / 2, 2, height,
-        { isStatic: true, render: { fillStyle: '#FF8A65' } }),
+        { isStatic: true, render: { fillStyle: '#18181D' } }),
 
     Bodies.rectangle(
         width / 2, height, width, 2, {
-        isStatic: true, render: { fillStyle: '#FF8A65' }
+        isStatic: true, render: { fillStyle: '#18181D' }
     }),
 ];
 World.add(world, walls);
@@ -179,11 +179,13 @@ horizontals.forEach((row, rowIndex) => {
             columnIndex * unitLengthX + unitLengthX / 2,
             rowIndex * unitLengthY + unitLengthY,
             unitLengthX,
-            10,
+            5,
             {
                 label: 'wall',
                 isStatic: true,
-                render: { fillStyle: '#FF8A65' }
+                render: {
+                    fillStyle: '#FF8A65'
+                }
             }
         );
 
@@ -200,12 +202,14 @@ verticals.forEach((row, rowIndex) => {
         const wall = Bodies.rectangle(
             columnIndex * unitLengthX + unitLengthX,
             rowIndex * unitLengthY + unitLengthY / 2,
-            10,
+            5,
             unitLengthY,
             {
                 label: 'wall',
                 isStatic: true,
-                render: { fillStyle: '#FF8A65' }
+                render: {
+                    fillStyle: '#FF8A65'
+                }
             }
         );
 
@@ -228,7 +232,7 @@ const goal = Bodies.rectangle(
 World.add(world, goal);
 
 // Ball
-const ballRadius = Math.min(unitLengthX, unitLengthY) / 4;
+const ballRadius = Math.min(unitLengthX, unitLengthY) / 3;
 const ball = Bodies.circle(
     unitLengthX / 2,
     unitLengthY / 2,
@@ -266,6 +270,7 @@ Events.on(engine, 'collisionStart', (event) => {
             labels.includes(collision.bodyA.label) &&
             labels.includes(collision.bodyA.label)
         ) {
+            document.querySelector('.winner').classList.remove('hidden');
             world.gravity.y = 1;
             gravityBtn.classList.add('pressed');
             world.bodies.forEach(body => {
@@ -306,3 +311,4 @@ gravityBtn.addEventListener('click', () => {
 //     cellsVertical = value;
 
 // });
+
