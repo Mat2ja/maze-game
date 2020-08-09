@@ -44,9 +44,6 @@ button {
 	transition: background 300ms;
 }
 
-button.pressed {
-}
-
 button:hover {
 	background: #18181d;
 	color: #f06090;
@@ -99,5 +96,5 @@ canvas {
 
 h1 {
 	color: white;
-	font-size: 3.5em;
+	font-size: 5em;
 }
