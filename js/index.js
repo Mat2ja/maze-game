@@ -11,8 +11,8 @@ const {
     Events
 } = Matter;
 
-const cellsHorizonzal = 14;
-const cellsVertical = 10;
+let cellsHorizonzal = 14;
+let cellsVertical = 10;
 // const width = window.innerWidth;
 // const height = window.innerHeight;
 const width = document.body.clientWidth;
@@ -31,7 +31,7 @@ engine.world.gravity.y = 0;
 const { world } = engine;
 
 // create a renderer
-const render = Render.create({
+let render = Render.create({
     element: document.body.querySelector('.wrapper'),
     engine: engine,
     options: {
@@ -45,7 +45,8 @@ const render = Render.create({
 Render.run(render);
 
 // run the runner
-Runner.run(Runner.create(), engine);
+const runner = Runner.create();
+Runner.run(runner, engine);
 
 // Walls
 const walls = [
@@ -296,3 +297,12 @@ gravityBtn.addEventListener('click', () => {
 
     gravityBtn.classList.toggle('pressed');
 });
+
+// const difficulty = document.querySelector('input[type="range"');
+// difficulty.addEventListener('input', e => {
+//     let value = e.target.value;
+
+//     cellsHorizonzal = value * 1.4;
+//     cellsVertical = value;
+
+// });
