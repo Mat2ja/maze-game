@@ -11,8 +11,8 @@ const {
     Events
 } = Matter;
 
-let cellsHorizonzal = 2;
-let cellsVertical = 2;
+let cellsHorizonzal = 16;
+let cellsVertical = 8;
 // const width = window.innerWidth;
 // const height = window.innerHeight;
 const width = document.body.clientWidth;
@@ -292,8 +292,8 @@ Events.on(engine, 'collisionStart', (event) => {
 
 const gravityBtn = document.querySelector('#gravity-btn');
 gravityBtn.addEventListener('click', () => {
-
     const { gravity } = engine.world;
+
     if (gravity.y) {
         gravity.y = 0;
     } else {
@@ -302,6 +302,19 @@ gravityBtn.addEventListener('click', () => {
 
     gravityBtn.classList.toggle('pressed');
 });
+
+document.addEventListener('keyup', e => {
+    const { gravity } = engine.world;
+
+    if (e.keyCode === 71) {
+        if (gravity.y) {
+            gravity.y = 0;
+        } else {
+            gravity.y = 1;
+        };
+        gravityBtn.classList.toggle('pressed');
+    }
+})
 
 // const difficulty = document.querySelector('input[type="range"');
 // difficulty.addEventListener('input', e => {
